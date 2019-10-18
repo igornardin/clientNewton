@@ -7,7 +7,7 @@ public class Client {
 	
 	public static void main(String[] args) {
 		System.out.println("Começou!");
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < 100000000; i++) {
 			switch (args[0]) {
 			//Crescente
 			case "1":
@@ -29,6 +29,8 @@ public class Client {
 			default:
 				break;
 			}
+			while(Thread.activeCount() >= 10) {}
+				
 		
 		}
 	}
