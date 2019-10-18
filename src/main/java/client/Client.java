@@ -29,7 +29,7 @@ public class Client {
 			default:
 				break;
 			}
-			while(Thread.activeCount() >= 10) {}
+			while(Thread.activeCount() >= 15) {}
 				
 		
 		}
