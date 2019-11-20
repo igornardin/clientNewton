@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class Request implements Runnable {
 
@@ -15,6 +17,7 @@ public class Request implements Runnable {
 	private double b;
 	private double n;
     private static int HTTP_COD_SUCESSO = 200;
+    static final Logger logger = LogManager.getLogger(Request.class.getName());
 
 	public Request(double a, double b, double n) {
 		this.a = a;
@@ -28,7 +31,7 @@ public class Request implements Runnable {
 		URL url;
 		try {
 			long tempoInicial = System.currentTimeMillis();
-			url = new URL("http://localhost:4000/?a=" + a + "&b=" + b + "&n=" + n);
+			url = new URL("http://127.0.0.1:4000/?a=" + (int)a + "&b=" + (int)b + "&n=" + (int)n);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
 			con.setRequestProperty("Accept", "application/json");
@@ -47,12 +50,12 @@ public class Request implements Runnable {
 					// TODO: handle exception
 				}
 			}
-			System.out.println("a=" + a + " b=" + b + " n=" + n + " Result= " + result + " Tempo total="
+			logger.info("a=" + a + " b=" + b + " n=" + n + " Result= " + result + " Tempo="
 					+ (System.currentTimeMillis() - tempoInicial));
 			con.disconnect();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 
 	}
