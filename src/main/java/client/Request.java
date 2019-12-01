@@ -28,6 +28,7 @@ public class Request implements Runnable {
 	@Override
 	public void run() {
 		double result = 0;
+		String hostname = "";
 		URL url;
 		try {
 			long tempoInicial = System.currentTimeMillis();
@@ -46,11 +47,12 @@ public class Request implements Runnable {
 				JSONObject jsonObject = (JSONObject) obj;
 				try {
 					result = (double) jsonObject.get("result");
+					hostname = (String) jsonObject.get("hostname");
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
 			}
-			logger.info("a=" + a + " b=" + b + " n=" + n + " Result= " + result + " Tempo="
+			logger.info("Hostname=" + hostname + " a=" + a + " b=" + b + " n=" + n + " Result= " + result + " Tempo="
 					+ (System.currentTimeMillis() - tempoInicial));
 			con.disconnect();
 		} catch (IOException e) {
