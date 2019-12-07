@@ -5,13 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.Callable;
+
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-public class Request implements Runnable {
+public class Request implements Callable<String> {
 
 	private double a;
 	private double b;
@@ -26,9 +28,10 @@ public class Request implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public String call() {
 		double result = 0;
 		String hostname = "";
+		String resultado ="";
 		URL url;
 		try {
 			long tempoInicial = System.currentTimeMillis();
@@ -52,14 +55,14 @@ public class Request implements Runnable {
 					// TODO: handle exception
 				}
 			}
-			logger.info("Hostname=" + hostname + " a=" + a + " b=" + b + " n=" + n + " Result= " + result + " Tempo="
-					+ (System.currentTimeMillis() - tempoInicial));
 			con.disconnect();
+			resultado = "Hostname=" + hostname + " a=" + a + " b=" + b + " n=" + n + " Result= " + result + " Tempo="
+					+ (System.currentTimeMillis() - tempoInicial);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			logger.error(e.getMessage());
 		}
-
+		return resultado;
 	}
 
 }
